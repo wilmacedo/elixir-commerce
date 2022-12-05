@@ -3,6 +3,29 @@ defmodule ComercioWeb.FoodController do
 
   alias Comercio.Procuts
   alias Comercio.Procuts.Food
+  alias Comercio.Accounts
+
+  plug :check_auth when action in [:new, :create, :edit, :update, :delete, :show]
+
+  def check_auth(conn, _args) do
+    if user_id = get_session(conn, :current_user_id) do
+      current_user = Accounts.get_users!(user_id)
+
+      if current_user.role == "admin" do
+        conn
+        |> assign(:current_user, current_user)
+      else
+        conn
+        |> put_flash(:error, "Seu cargo não pertido o acesso à essa página.")
+        |> redirect(to: Routes.food_path(conn, :index))
+      end
+    else
+      conn
+      |> put_flash(:error, "Você precisa estar logado para acessar essa página.")
+      |> redirect(to: Routes.food_path(conn, :index))
+      |> halt
+    end
+  end
 
   def index(conn, _params) do
     foods = Procuts.list_foods()
