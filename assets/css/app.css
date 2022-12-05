@@ -1,6 +1,11 @@
 /* This file is for your main application CSS */
 @import "./phoenix.css";
 
+.product-image {
+  height: 50px;
+  width: auto;
+}
+
 /* Alerts and form errors used by phx.new */
 .alert {
   padding: 15px;

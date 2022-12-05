@@ -17,8 +17,9 @@ defmodule ComercioWeb.Router do
   scope "/", ComercioWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
-    resources "/accounts", UsersController
+    get "/page", PageController, :index
+    resources "/reginstrations", UsersController
+    resources "/", FoodController
   end
 
   # Other scopes may use custom stacks.

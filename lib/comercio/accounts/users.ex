@@ -1,6 +1,7 @@
 defmodule Comercio.Accounts.Users do
   use Ecto.Schema
   import Ecto.Changeset
+  alias Comeonin.Bcrypt
 
   schema "accounts" do
     field :lastName, :string
@@ -24,5 +25,6 @@ defmodule Comercio.Accounts.Users do
     users
     |> cast(attrs, [:name, :lastName, :role, :password])
     |> validate_required([:name, :lastName, :role, :password])
+    |> update_change(:password, &Bcrypt.hashpwsalt/1)
   end
 end

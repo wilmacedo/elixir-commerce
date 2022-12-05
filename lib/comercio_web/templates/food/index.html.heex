@@ -1,0 +1,29 @@
+<h1>Produtos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th></th>
+
+      <th>Nome</th>
+      <th>Categoria</th>
+      <th>Preço/KG</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for food <- @foods do %>
+    <tr>
+      <td><img class="product-image" src={food.img} alt={food.name}/></td>
+      <td><%= food.name %></td>
+      <td><%= food.category %></td>
+      <td name="price"><%= food.price %></td>
+
+      <td>
+        <span><%= link "Ver", to: Routes.food_path(@conn, :show, food) %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>

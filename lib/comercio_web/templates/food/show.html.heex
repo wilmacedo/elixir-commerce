@@ -1,0 +1,28 @@
+<h1>Show Food</h1>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @food.name %>
+  </li>
+
+  <li>
+    <strong>Img:</strong>
+    <%= @food.img %>
+  </li>
+
+  <li>
+    <strong>Category:</strong>
+    <%= @food.category %>
+  </li>
+
+  <li>
+    <strong>Price:</strong>
+    <%= @food.price %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.food_path(@conn, :edit, @food) %></span> |
+<span><%= link "Back", to: Routes.food_path(@conn, :index) %></span>
