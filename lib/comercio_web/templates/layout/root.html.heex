@@ -14,8 +14,12 @@
       <section class="container">
         <nav>
           <ul>
-            <%= link "Sign up", to: Routes.users_path(@conn, :new) %>
-            <%= link "Sign in", to: Routes.users_path(@conn, :new) %>
+            <%= if signed_in?(@conn) do %>
+            <%= link "Deslogar", to: Routes.session_path(@conn, :delete), method: :delete %>
+            <% else %>
+            <%= link "Cadastrar", to: Routes.users_path(@conn, :new) %>
+            <%= link "Logar", to: Routes.session_path(@conn, :new) %>
+            <% end %>
           </ul>
         </nav>
         <a class="phx-logo">

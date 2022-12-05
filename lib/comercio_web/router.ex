@@ -1,4 +1,7 @@
 defmodule ComercioWeb.Router do
+  alias ComercioWeb.UsersController
+  alias ComercioWeb.FoodController
+  alias ComercioWeb.SessionController
   use ComercioWeb, :router
 
   pipeline :browser do
@@ -14,12 +17,18 @@ defmodule ComercioWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", ComercioWeb do
+  scope "/" do
     pipe_through :browser
 
-    get "/page", PageController, :index
-    resources "/reginstrations", UsersController
-    resources "/", FoodController
+    get "/", FoodController, :index
+    resources "/food", FoodController
+
+    get "/register", UsersController, :index
+    resources "/register", UsersController
+
+    get "/sign-in", SessionController, :new
+    post "/sign-in", SessionController, :create
+    delete "/sign-out", SessionController, :delete
   end
 
   # Other scopes may use custom stacks.

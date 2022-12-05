@@ -7,7 +7,7 @@ defmodule Comercio.Accounts.Users do
     field :lastName, :string
     field :name, :string
     field :role, :string
-    field :password, :string
+    field :encrypted_password, :string
 
     timestamps()
   end
@@ -23,8 +23,8 @@ defmodule Comercio.Accounts.Users do
   @doc false
   def changeset(users, attrs) do
     users
-    |> cast(attrs, [:name, :lastName, :role, :password])
-    |> validate_required([:name, :lastName, :role, :password])
-    |> update_change(:password, &Bcrypt.hashpwsalt/1)
+    |> cast(attrs, [:name, :lastName, :role, :encrypted_password])
+    |> validate_required([:name, :lastName, :role, :encrypted_password])
+    |> update_change(:encrypted_password, &Bcrypt.hashpwsalt/1)
   end
 end

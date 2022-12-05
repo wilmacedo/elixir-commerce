@@ -8,6 +8,14 @@ defmodule Comercio.Accounts do
 
   alias Comercio.Accounts.Users
 
+  def get_by_name(name) when is_nil(name) do
+    nil
+  end
+
+  def get_by_name(name) do
+    Repo.get_by(Users, name: name)
+  end
+
   @doc """
   Returns the list of accounts.
 
