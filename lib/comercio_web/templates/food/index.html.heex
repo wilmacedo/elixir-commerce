@@ -21,7 +21,11 @@
       <td name="price"><%= food.price %></td>
 
       <td>
-        <span><%= link "Adicionar", to: Routes.food_path(@conn, :show, food) %></span>
+        <%= if signed_in?(@conn) do %>
+          <%= form_for @conn, Routes.order_path(@conn, :create, %{id: food.id}), fn _f -> %>
+            <%= submit "Criar pedido" %>
+          <% end %>
+        <% end %>
       </td>
     </tr>
 <% end %>

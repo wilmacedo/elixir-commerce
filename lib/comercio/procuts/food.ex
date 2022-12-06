@@ -7,6 +7,7 @@ defmodule Comercio.Procuts.Food do
     field :img, :string
     field :name, :string
     field :price, :decimal
+    field :order, :integer
 
     timestamps()
   end
@@ -14,7 +15,7 @@ defmodule Comercio.Procuts.Food do
   @doc false
   def changeset(food, attrs) do
     food
-    |> cast(attrs, [:name, :img, :category, :price])
+    |> cast(attrs, [:name, :img, :category, :price, :order])
     |> validate_required([:name, :img, :category, :price])
   end
 end

@@ -1,4 +1,5 @@
 defmodule ComercioWeb.Router do
+  alias ComercioWeb.OrderController
   alias ComercioWeb.UsersController
   alias ComercioWeb.FoodController
   alias ComercioWeb.SessionController
@@ -23,8 +24,9 @@ defmodule ComercioWeb.Router do
     get "/", FoodController, :index
     resources "/food", FoodController
 
-    get "/register", UsersController, :index
     resources "/register", UsersController
+
+    resources "/orders", OrderController
 
     get "/sign-in", SessionController, :new
     post "/sign-in", SessionController, :create

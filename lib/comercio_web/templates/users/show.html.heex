@@ -17,11 +17,6 @@
     <%= @users.role %>
   </li>
 
-  <li>
-    <strong>Password:</strong>
-    <%= @users.password %>
-  </li>
-
 </ul>
 
 <span><%= link "Edit", to: Routes.users_path(@conn, :edit, @users) %></span> |

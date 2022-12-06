@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="csrf-token" content={csrf_token_value()}>
-    <%= live_title_tag assigns[:page_title] || "Comercio", suffix: " · Comercio" %>
+    <%= live_title_tag assigns[:page_title] || "Comercio", suffix: " · Início" %>
     <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")}/>
     <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script>
   </head>
@@ -16,13 +16,17 @@
           <ul>
             <%= if signed_in?(@conn) do %>
             <%= link "Deslogar", to: Routes.session_path(@conn, :delete), method: :delete %>
+            <%= link "Pedidos", to: Routes.order_path(@conn, :index) %>
+            <%= if user_role?(@conn) == "admin" do %>
+            <%= link "Clientes", to: Routes.users_path(@conn, :index) %>
+            <% end %>
             <% else %>
             <%= link "Cadastrar", to: Routes.users_path(@conn, :new) %>
             <%= link "Logar", to: Routes.session_path(@conn, :new) %>
             <% end %>
           </ul>
         </nav>
-        <a class="phx-logo">
+        <a href={Routes.food_path(@conn, :index)} class="phx-logo">
           <img src={Routes.static_path(@conn, "/images/phoenix.png")} alt="Phoenix Framework Logo"/>
         </a>
       </section>
@@ -37,7 +41,6 @@
         value = Number(value).toLocaleString(undefined, {
           minimumFractionDigits: 2
         });
-        console.log(element);
         element.innerHTML = `R$ ${value}`;
       }
     })

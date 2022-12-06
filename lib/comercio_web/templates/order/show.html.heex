@@ -1,0 +1,27 @@
+<h1>Pedido #<%= @order.id %></h1>
+<h3>Produtos</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th></th>
+
+      <th>Nome</th>
+      <th>Categoria</th>
+      <th>Preço/KG</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= for product <- @products do %>
+      <%= if product.order == @order.id do %>
+        <td><img class="product-image" src={product.img} alt={product.name}/></td>
+        <td><%= product.name %></td>
+        <td><%= product.category %></td>
+        <td name="price"><%= product.price %></td>
+
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

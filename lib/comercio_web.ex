@@ -97,7 +97,7 @@ defmodule ComercioWeb do
 
       import ComercioWeb.ErrorHelpers
       import ComercioWeb.Gettext
-      import ComercioWeb.Helpers.Auth, only: [signed_in?: 1]
+      import ComercioWeb.Helpers.Auth
       alias ComercioWeb.Router.Helpers, as: Routes
     end
   end

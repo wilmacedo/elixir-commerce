@@ -1,13 +1,15 @@
 defmodule ComercioWeb.FoodController do
   use ComercioWeb, :controller
 
+  require Logger
+
   alias Comercio.Procuts
   alias Comercio.Procuts.Food
   alias Comercio.Accounts
 
   plug :check_auth when action in [:new, :create, :edit, :update, :delete, :show]
 
-  def check_auth(conn, _args) do
+  defp check_auth(conn, _args) do
     if user_id = get_session(conn, :current_user_id) do
       current_user = Accounts.get_users!(user_id)
 
@@ -61,19 +63,11 @@ defmodule ComercioWeb.FoodController do
     render(conn, "edit.html", food: food, changeset: changeset)
   end
 
-  def update(conn, %{"id" => id, "food" => food_params}) do
-    food = Procuts.get_food!(id)
+  def update(conn, %{"food" => food}) do
+    Logger.info("food_params: #{inspect(food)}")
 
-    case Procuts.update_food(food, food_params) do
-      {:ok, _food} ->
-        conn
-        |> put_flash(:info, "Food updated successfully.")
-
-      # |> redirect(to: Routes.food_path(conn, :show, food))
-
-      {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "edit.html", food: food, changeset: changeset)
-    end
+    conn
+    |> put_flash(:info, "Food updated successfully.")
   end
 
   def delete(conn, %{"id" => id}) do

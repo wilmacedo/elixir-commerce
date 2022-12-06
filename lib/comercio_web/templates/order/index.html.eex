@@ -1,0 +1,51 @@
+<h1>Pedidos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Ordem</th>
+      <th>Cliente</th>
+      <th>Status</th>
+      <th>Produtos</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <%= for orders <- @orders do %>
+      <tr>
+      <%= if user_role?(@conn) == "admin" do %>
+        <td>#<%= orders.id %></td>
+          <td><%= get_user_name?(@conn, orders.clientId) %></td>
+          <td><%= orders.status %></td>
+          <td>
+            <%= for product <- @products do %>
+              <%= if product.order == orders.id do %>
+                <%= link product.name, to: Routes.food_path(@conn, :show, product) %>
+              <% end %>
+            <% end %>
+          </td>
+          <td>
+            <span><%= link "Deletar", to: Routes.order_path(@conn, :delete, orders), method: :delete, data: [confirm: "Are you sure?"] %></span>
+          </td>
+      <% else %>
+      <%= if orders.clientId == Plug.Conn.get_session(@conn, :current_user_id) do %>
+        <td>#<%= orders.id %></td>
+          <td><%= get_user_name?(@conn, orders.clientId) %></td>
+          <td><%= orders.status %></td>
+          <td>
+            <%= for product <- @products do %>
+              <%= if product.order == orders.id do %>
+                <%= link product.name, to: Routes.food_path(@conn, :show, product) %>
+              <% end %>
+            <% end %>
+          </td>
+          <td>
+            <span><%= link "Visualizar", to: Routes.order_path(@conn, :show, orders) %></span>
+          </td>
+          <% end %>
+      <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
